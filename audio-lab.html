@@ -1,0 +1,67 @@
+<!doctype html>
+<html lang="es">
+  <head>
+    <meta charset="utf-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1" />
+    <title>La Excepción — Audio Lab</title>
+    <style>
+      :root {
+        --bg: #0d0714;
+        --panel: #1a1024;
+        --ink: #f3ead8;
+        --muted: #a898b8;
+        --gold: #d9b36c;
+        --violet: #9b5cff;
+        --warn: #e2455b;
+      }
+      * { box-sizing: border-box; }
+      body {
+        margin: 0;
+        padding: 16px;
+        background: var(--bg);
+        color: var(--ink);
+        font: 14px/1.4 system-ui, -apple-system, 'Segoe UI', sans-serif;
+      }
+      h1 { margin: 0 0 4px; font-size: 22px; color: var(--gold); letter-spacing: 0.04em; }
+      h1 small { color: var(--muted); font-weight: 400; font-size: 13px; }
+      h2 { margin: 0 0 8px; font-size: 15px; color: var(--gold); }
+      h3 { margin: 12px 0 6px; font-size: 12px; color: var(--muted); text-transform: uppercase; letter-spacing: 0.08em; }
+      section { background: var(--panel); border: 1px solid #2c1d3d; border-radius: 10px; padding: 12px 14px; margin: 12px 0; }
+      .row { display: flex; flex-wrap: wrap; gap: 8px; align-items: center; margin: 6px 0; }
+      .grid { display: grid; grid-template-columns: repeat(auto-fill, minmax(130px, 1fr)); gap: 6px; }
+      button {
+        background: #25173a;
+        color: var(--ink);
+        border: 1px solid #3b2856;
+        border-radius: 7px;
+        padding: 6px 8px;
+        font: inherit;
+        font-size: 12.5px;
+        cursor: pointer;
+        text-align: left;
+      }
+      button:hover { border-color: var(--violet); }
+      button:active { transform: translateY(1px); }
+      button.on { background: #3a2160; border-color: var(--violet); box-shadow: 0 0 0 1px var(--violet) inset; }
+      button.primary { background: var(--violet); border-color: var(--violet); color: #fff; font-weight: 600; }
+      select, input[type='number'] { background: #25173a; color: var(--ink); border: 1px solid #3b2856; border-radius: 6px; padding: 4px 6px; font: inherit; }
+      .slider { display: inline-flex; align-items: center; gap: 6px; background: #22152f; border-radius: 7px; padding: 4px 8px; }
+      .slider span:first-child { color: var(--muted); font-size: 12px; min-width: 64px; }
+      .slider .val { font-variant-numeric: tabular-nums; min-width: 34px; text-align: right; }
+      .status { color: var(--muted); font-size: 12px; font-variant-numeric: tabular-nums; margin-top: 6px; }
+      .log { max-height: 140px; overflow: auto; color: var(--muted); font-size: 12px; margin: 8px 0 0; }
+      .meter { position: relative; width: 180px; height: 10px; background: #120a1c; border: 1px solid #3b2856; border-radius: 5px; overflow: hidden; }
+      .meter .fill { position: absolute; left: 0; top: 0; bottom: 0; width: 0; background: linear-gradient(90deg, #4b8f6b, #d9b36c 70%, #e2455b); }
+      .meter .pk { position: absolute; top: 0; bottom: 0; width: 2px; background: #f3ead8; left: 0; }
+      table.diag { border-collapse: collapse; width: 100%; font-size: 12px; font-variant-numeric: tabular-nums; margin-top: 8px; }
+      table.diag th, table.diag td { border-bottom: 1px solid #2c1d3d; padding: 3px 6px; text-align: right; }
+      table.diag th:first-child, table.diag td:first-child { text-align: left; }
+      table.diag tr.warn td { color: var(--warn); }
+    </style>
+  </head>
+  <body>
+    <h1>La Excepción — Audio Lab <small>herramienta de desarrollo · todo sintetizado en vivo</small></h1>
+    <main id="app"></main>
+    <script type="module" src="/src/audio/lab.ts"></script>
+  </body>
+</html>

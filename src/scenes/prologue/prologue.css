@@ -1,0 +1,37 @@
+/* Prologue (.st-vig vignettes, eyelids, prompts) */
+.st-vig { position: absolute; inset: 0; background: #000; overflow: hidden; pointer-events: none; }
+.st-vig-svg { position: absolute; inset: 0; width: 100%; height: 100%; animation: st-kenburns 40s ease-out both; transform-origin: 50% 40%; opacity: 0; transition: opacity var(--vig-fade, 1.4s) ease; }
+.st-vig.in .st-vig-svg { opacity: 1; }
+@keyframes st-kenburns { from { transform: scale(1.0); } to { transform: scale(1.06); } }
+.st-steam { animation: st-steam 3.3s ease-in-out infinite; opacity: 0; }
+@keyframes st-steam { 0% { opacity: 0; transform: translateY(8px); } 30% { opacity: 1; } 100% { opacity: 0; transform: translateY(-40px); } }
+.st-lampglow { animation: st-flicker 5s ease-in-out infinite; transform-origin: 800px 170px; }
+.st-lampbulb { animation: st-flicker 5s ease-in-out infinite; }
+@keyframes st-flicker { 0%, 100% { opacity: 1; } 47% { opacity: 0.93; } 50% { opacity: 0.82; } 53% { opacity: 0.95; } 70% { opacity: 0.97; } }
+.st-twinkle { animation: st-twinkle 2.6s ease-in-out infinite; }
+@keyframes st-twinkle { 50% { opacity: 0.25; } }
+.st-rainline { animation: st-rain 0.55s linear infinite; }
+@keyframes st-rain { from { transform: translate(0, -60px); } to { transform: translate(-10px, 90px); } }
+.st-vig.rain .st-lampglow { opacity: 1.2; }
+.st-bruma-tail { transform-origin: -78px 18px; animation: st-wag 1.2s ease-in-out infinite; transform-box: view-box; }
+@keyframes st-wag { 0%, 100% { transform: rotate(-6deg); } 50% { transform: rotate(10deg); } }
+.st-bruma-head { transform-origin: 70px 20px; transform-box: view-box; animation: st-breath 4s ease-in-out infinite; }
+@keyframes st-breath { 50% { transform: rotate(-2deg); } }
+.st-vig.shake .st-bruma { animation: st-dogshake 0.16s ease-in-out 6; transform-box: view-box; }
+@keyframes st-dogshake { 0%, 100% { transform: translate(300px, 772px) rotate(0deg); } 50% { transform: translate(300px, 772px) rotate(5deg); } }
+
+/* eyelids: the boy closes his eyes, then opens them */
+.st-lids { position: absolute; inset: 0; pointer-events: none; }
+.st-lid { position: absolute; left: -5%; right: -5%; height: 62%; background: #000; transition: transform 1.6s cubic-bezier(.6, 0, .3, 1); }
+.st-lid.top { top: 0; transform: translateY(0); border-bottom-left-radius: 50% 18%; border-bottom-right-radius: 50% 18%; }
+.st-lid.bot { bottom: 0; transform: translateY(0); border-top-left-radius: 50% 18%; border-top-right-radius: 50% 18%; }
+.st-lids.open .st-lid.top { transform: translateY(-102%); }
+.st-lids.open .st-lid.bot { transform: translateY(102%); }
+
+.st-corre {
+  position: absolute; left: 50%; top: 42%; transform: translate(-50%, -50%) scale(1.15); font-family: var(--f-book); font-style: italic;
+  font-size: clamp(40px, 5vw, 76px); color: #f6efe2; opacity: 0; letter-spacing: 0.04em; text-shadow: 0 0 24px rgba(0, 0, 0, 0.95), 0 2px 4px #000;
+  transition: opacity 0.35s ease, transform 0.6s cubic-bezier(.2, 1.4, .4, 1); pointer-events: none;
+}
+.st-corre.in { opacity: 1; transform: translate(-50%, -50%) scale(1); }
+.st-corre.out { opacity: 0; transition: opacity 1.4s ease; }

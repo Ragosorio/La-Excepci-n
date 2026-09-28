@@ -1,0 +1,166 @@
+/* ═══════════════════════════════════════════════════════════════════════
+   Council scene UI (.pol-): parchment resolution card, delegate strip with lean meters, tools, vote stamps.
+   ═══════════════════════════════════════════════════════════════════════ */
+
+.pol-ui { position: absolute; inset: 0; pointer-events: none; opacity: 0; transition: opacity 0.8s ease; font-family: var(--f-ui); }
+.pol-ui.in { opacity: 1; }
+.pol-ui > * { pointer-events: auto; }
+
+/* top row: header · resolution card · forecast */
+.pol-top {
+  position: absolute; top: 12px; left: 12px; right: 12px; display: grid; gap: 12px; align-items: start; pointer-events: none;
+  grid-template-columns: minmax(150px, 250px) minmax(280px, 580px) minmax(150px, 214px); justify-content: space-between;
+}
+.pol-top > * { pointer-events: auto; }
+.pol-head {
+  padding: 10px 14px 10px; border-radius: 10px;
+  background: linear-gradient(180deg, rgba(20, 12, 30, 0.82), rgba(10, 6, 16, 0.86)); border: 1px solid rgba(217, 179, 108, 0.5);
+  box-shadow: 0 10px 30px rgba(0, 0, 0, 0.4);
+}
+.pol-head-title { font-family: var(--f-title); font-size: 18px; color: var(--gold-hi); letter-spacing: 0.1em; }
+.pol-head-sub { font-family: var(--f-book); font-style: italic; color: var(--ivory-dim); font-size: 14px; margin: 2px 0 8px; }
+.pol-res { display: flex; flex-wrap: wrap; gap: 5px; }
+.pol-res .lx-chip { font-size: 13px; padding: 3px 9px 3px 5px; }
+.pol-res .lx-chip svg { width: 18px; height: 18px; }
+.pol-alert { color: #ffb0b8; }
+
+/* parchment resolution card */
+.pol-card {
+  position: relative; padding: 14px 20px 14px;
+  background: radial-gradient(ellipse at 50% 0%, #fffaf0, #efe4cd 70%, #e3d3b2); color: #2a1a10; border-radius: 6px;
+  border: 2px solid #c9a24f; box-shadow: 0 16px 40px rgba(20, 10, 0, 0.45), inset 0 0 30px rgba(160, 120, 60, 0.25);
+  text-align: center; animation: pol-drop 0.6s cubic-bezier(.2, 1.3, .4, 1);
+}
+.pol-card::before, .pol-card::after { content: ''; position: absolute; left: 10px; right: 10px; height: 2px; background: linear-gradient(90deg, transparent, #c9a24f, transparent); }
+.pol-card::before { top: 6px; } .pol-card::after { bottom: 6px; }
+@keyframes pol-drop { from { transform: translateY(-30px); opacity: 0; } to { transform: none; opacity: 1; } }
+.pol-card-icon { font-size: 28px; color: #a6782a; line-height: 1; text-shadow: 0 1px 0 #fff; }
+.pol-card-title { font-family: var(--f-title); font-size: clamp(18px, 1.6vw, 24px); color: #3a200c; letter-spacing: 0.04em; margin: 4px 0; }
+.pol-card-desc { font-family: var(--f-book); font-style: italic; font-size: 16px; color: #4a3420; margin-bottom: 8px; }
+.pol-card-fx { font-size: 13.5px; color: #3a2a1a; text-align: left; display: inline-block; margin-bottom: 8px; }
+.pol-card-fx-label { font-weight: 800; color: #7a4a14; display: block; }
+.pol-card .pol-want { margin-top: 2px; }
+.pol-want { display: inline-block; font: 800 12px var(--f-ui); letter-spacing: 0.12em; text-transform: uppercase; padding: 4px 10px; border-radius: 6px; }
+.pol-card .pol-want.si { background: #2f6a3a; color: #eaffea; }
+.pol-card .pol-want.no { background: #8f2436; color: #ffecef; }
+.pol-tally { margin-top: 10px; font-family: var(--f-impact); font-size: 34px; letter-spacing: 0.06em; display: flex; justify-content: center; gap: 14px; }
+.pol-tally .si { color: #2f7a3a; } .pol-tally .no { color: #a8243a; } .pol-tally .sep { color: #a6782a; }
+.pol-tally.bump { animation: lx-bump 0.35s ease; }
+.pol-end-row { display: flex; justify-content: space-between; gap: 14px; padding: 6px 10px; margin: 4px 0; border-radius: 6px; font-size: 14px; }
+.pol-end-row.won { background: rgba(47, 106, 58, 0.15); color: #1f4a28; }
+.pol-end-row.lost { background: rgba(143, 36, 54, 0.14); color: #6a1a28; }
+.pol-card .lx-btn { margin-top: 8px; }
+
+/* right side: forecast */
+.pol-side {
+  padding: 12px 14px; border-radius: 12px; text-align: center;
+  background: linear-gradient(180deg, rgba(20, 12, 30, 0.84), rgba(10, 6, 16, 0.9)); border: 1px solid rgba(217, 179, 108, 0.45);
+  box-shadow: 0 10px 30px rgba(0, 0, 0, 0.4); display: flex; flex-direction: column; align-items: center; gap: 4px;
+}
+.pol-fc-label { font-size: 11px; text-transform: uppercase; letter-spacing: 0.18em; color: var(--ivory-dim); }
+.pol-fc-pct { font-family: var(--f-impact); font-size: 52px; line-height: 1; letter-spacing: 0.04em; text-shadow: 0 3px 0 rgba(0, 0, 0, 0.6); transition: color 0.3s; }
+.pol-fc-sub { font-size: 12px; color: var(--ivory-dim); margin-bottom: 4px; }
+.pol-dots { display: flex; gap: 6px; margin: 4px 0 8px; }
+.pol-dot { width: 16px; height: 16px; border-radius: 50%; border: 2px solid rgba(0, 0, 0, 0.6); box-shadow: 0 0 8px currentColor; }
+.pol-dot.for { background: #b48cff; color: #b48cff; }
+.pol-dot.against { background: #ff5d6c; color: #ff5d6c; }
+.pol-dot.maybe { background: #e8d9a8; color: #e8d9a8; animation: pol-maybe 1.4s ease-in-out infinite; }
+.pol-dot.empty { background: #333; color: transparent; }
+@keyframes pol-maybe { 50% { transform: scale(0.8); opacity: 0.7; } }
+.pol-ione { display: flex; gap: 8px; align-items: center; text-align: left; padding: 6px; border-radius: 10px; background: rgba(255, 255, 255, 0.05); width: 100%; }
+.pol-ione-face { width: 52px; height: 52px; border-radius: 50%; overflow: hidden; background: rgba(243, 234, 216, 0.15); flex: none; }
+.pol-ione-face svg { width: 100%; height: 100%; }
+.pol-ione-name { font-family: var(--f-title); font-size: 13px; color: var(--gold-hi); }
+.pol-vote-btn { margin-top: 10px; width: 100%; }
+.pol-vote-lbl { font-family: var(--f-impact); font-size: 24px; letter-spacing: 0.08em; }
+.pol-vote-btn { animation: soc-glow 1.8s ease-in-out infinite; }
+
+/* log line */
+.pol-log {
+  position: absolute; left: 50%; bottom: 300px; transform: translate(-50%, 10px); max-width: min(760px, 80vw); padding: 8px 18px; border-radius: 10px;
+  font-family: var(--f-book); font-style: italic; font-size: 18px; text-align: center; color: var(--ivory);
+  background: rgba(10, 6, 16, 0.82); border: 1px solid rgba(217, 179, 108, 0.4); opacity: 0; transition: opacity 0.3s, transform 0.3s; pointer-events: none;
+}
+.pol-log.show { opacity: 1; transform: translate(-50%, 0); }
+.pol-log.bad { border-color: rgba(226, 69, 91, 0.7); color: #ffd0d6; }
+.pol-log.good { border-color: rgba(180, 140, 255, 0.7); }
+
+/* bottom: tools + delegates */
+.pol-bottom { position: absolute; left: 50%; bottom: 12px; transform: translateX(-50%); display: flex; flex-direction: column; align-items: center; gap: 8px; width: min(1180px, 98vw); }
+.pol-tools { display: flex; gap: 6px; align-items: stretch; flex-wrap: wrap; justify-content: center; transition: opacity 0.3s; }
+.pol-ui.revealing .pol-tools { opacity: 0; pointer-events: none; }
+.pol-tools-label { width: 100%; text-align: center; font-family: var(--f-title); font-size: 13px; color: var(--gold-hi); text-shadow: 0 2px 6px #000, 0 0 12px #000; }
+.pol-tool {
+  display: flex; flex-direction: column; align-items: center; gap: 1px; min-width: 88px; padding: 5px 7px; border-radius: 9px; cursor: pointer;
+  background: linear-gradient(180deg, rgba(70, 44, 110, 0.92), rgba(30, 16, 50, 0.95)); border: 1px solid rgba(199, 162, 255, 0.4); color: var(--ivory);
+  box-shadow: 0 3px 0 rgba(0, 0, 0, 0.5); transition: transform 0.1s, box-shadow 0.15s, border-color 0.15s, filter 0.15s;
+}
+.pol-tool:hover:not(:disabled) { transform: translateY(-3px); border-color: var(--violet-hi); box-shadow: 0 0 16px rgba(155, 92, 255, 0.55), 0 3px 0 rgba(0, 0, 0, 0.5); }
+.pol-tool:disabled { opacity: 0.38; cursor: not-allowed; filter: grayscale(0.7); }
+.pol-tool.danger { background: linear-gradient(180deg, rgba(120, 30, 48, 0.92), rgba(60, 12, 24, 0.95)); border-color: rgba(255, 123, 139, 0.45); }
+.pol-tool-icon svg { width: 22px; height: 22px; }
+.pol-tool-name { font-weight: 700; font-size: 13px; }
+.pol-tool-cost { font-size: 11px; color: var(--ivory-dim); }
+
+.pol-strip { display: flex; gap: 10px; justify-content: center; }
+.pol-del {
+  position: relative; width: 172px; padding: 8px 10px 9px; border-radius: 12px; cursor: pointer; text-align: center;
+  background: linear-gradient(180deg, rgba(24, 14, 36, 0.9), rgba(10, 6, 16, 0.94)); border: 1px solid rgba(217, 179, 108, 0.35);
+  box-shadow: 0 8px 24px rgba(0, 0, 0, 0.45); transition: transform 0.15s, border-color 0.15s, box-shadow 0.15s;
+}
+.pol-del:hover { transform: translateY(-4px); border-color: rgba(245, 217, 154, 0.8); }
+.pol-del.sel { border-color: var(--violet-hi); box-shadow: 0 0 0 2px rgba(155, 92, 255, 0.55), 0 0 26px rgba(155, 92, 255, 0.5); transform: translateY(-6px); }
+.pol-del.mine { border-color: #b07bff; background: linear-gradient(180deg, rgba(60, 30, 100, 0.92), rgba(20, 10, 34, 0.95)); }
+.pol-del.empty { opacity: 0.55; filter: grayscale(0.8); }
+.pol-del.voted-for { box-shadow: 0 0 0 2px #b48cff, 0 0 30px rgba(180, 140, 255, 0.7); }
+.pol-del.voted-against { box-shadow: 0 0 0 2px #ff5d6c, 0 0 30px rgba(255, 93, 108, 0.6); }
+.pol-del-top { position: relative; display: flex; justify-content: center; }
+.pol-del-face { width: 64px; height: 64px; border-radius: 50%; overflow: hidden; background: radial-gradient(circle at 50% 35%, rgba(245, 217, 154, 0.35), rgba(40, 20, 60, 0.6)); border: 2px solid rgba(217, 179, 108, 0.55); }
+.pol-del-face svg { width: 100%; height: 100%; }
+.pol-del-crest { position: absolute; right: 6px; bottom: -4px; }
+.pol-del-crest svg { width: 26px; height: 26px; filter: drop-shadow(0 2px 3px rgba(0, 0, 0, 0.6)); }
+.pol-del-name { font-family: var(--f-title); font-size: 13px; color: var(--gold-hi); margin-top: 5px; white-space: nowrap; overflow: hidden; text-overflow: ellipsis; }
+.pol-del-cont { font-size: 11px; color: var(--ivory-dim); display: flex; gap: 6px; justify-content: center; align-items: center; }
+.pol-meter { margin: 6px 2px 3px; }
+.pol-meter-track { position: relative; height: 8px; border-radius: 5px; background: linear-gradient(90deg, #8f2436, #3a2a3a 45%, #3a2a3a 55%, #6a3bc0); border: 1px solid rgba(255, 255, 255, 0.15); }
+.pol-meter-mid { position: absolute; left: 50%; top: -2px; bottom: -2px; width: 1px; background: rgba(255, 255, 255, 0.5); }
+.pol-meter-needle { position: absolute; top: -4px; width: 6px; height: 14px; margin-left: -3px; border-radius: 3px; border: 1px solid #150b1f; transition: left 0.6s cubic-bezier(.2, 1.4, .4, 1), background 0.3s; box-shadow: 0 0 8px currentColor; }
+.pol-del-p { font-size: 12px; font-weight: 700; }
+.pol-del-empty { font-size: 12px; color: var(--ivory-dim); margin: 8px 0; font-style: italic; }
+.pol-badges { display: flex; flex-wrap: wrap; gap: 3px; justify-content: center; margin-top: 4px; }
+.pol-badges span { font-size: 10px; padding: 1px 5px; border-radius: 5px; background: rgba(155, 92, 255, 0.2); border: 1px solid rgba(199, 162, 255, 0.35); }
+
+/* vote stamp */
+.pol-stamp {
+  position: absolute; left: 50%; top: 40%; transform: translate(-50%, -50%) rotate(-8deg); padding: 6px 30px 10px; border-radius: 10px;
+  font-family: var(--f-impact); font-size: clamp(70px, 9vw, 130px); line-height: 1; letter-spacing: 0.06em; text-align: center;
+  border: 8px solid currentColor; background: rgba(10, 6, 16, 0.35); text-shadow: 4px 4px 0 #000; animation: pol-stamp 0.42s cubic-bezier(.2, 1.6, .4, 1);
+}
+.pol-stamp small { display: block; font-family: var(--f-title); font-size: 18px; letter-spacing: 0.12em; text-shadow: 0 2px 4px #000; }
+.pol-stamp.good { color: #c7a2ff; box-shadow: 0 0 60px rgba(155, 92, 255, 0.6); }
+.pol-stamp.bad { color: #ff5d6c; box-shadow: 0 0 60px rgba(226, 69, 91, 0.55); }
+.pol-stamp.out { animation: pol-stamp-out 0.4s ease forwards; }
+@keyframes pol-stamp { from { transform: translate(-50%, -50%) rotate(-8deg) scale(2.4); opacity: 0; } to { transform: translate(-50%, -50%) rotate(-8deg) scale(1); opacity: 1; } }
+@keyframes pol-stamp-out { to { transform: translate(-50%, -60%) rotate(-8deg) scale(0.9); opacity: 0; } }
+
+@media (max-width: 1100px) {
+  .pol-del { width: 142px; padding: 6px 7px 7px; }
+  .pol-del-face { width: 58px; height: 58px; }
+  .pol-fc-pct { font-size: 40px; }
+  .pol-card-desc { font-size: 14px; }
+  .pol-card-fx { font-size: 12px; }
+  .pol-log { bottom: 290px; }
+  .pol-tool { min-width: 80px; }
+  .pol-tool-name { font-size: 12px; }
+}
+@media (max-width: 860px) {
+  .pol-top { grid-template-columns: minmax(130px, 170px) 1fr minmax(130px, 160px); gap: 8px; }
+  .pol-head-title { font-size: 14px; }
+  .pol-res .lx-chip { font-size: 11px; }
+  .pol-card { padding: 10px 12px; }
+  .pol-card-title { font-size: 16px; }
+  .pol-del { width: 118px; }
+  .pol-del-face { width: 48px; height: 48px; }
+  .pol-del-name { font-size: 11px; }
+  .pol-ione { flex-direction: column; }
+}

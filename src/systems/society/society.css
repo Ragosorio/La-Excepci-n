@@ -1,0 +1,238 @@
+/* ═══════════════════════════════════════════════════════════════════════
+   Society UIs — market, haggling, bank, Casa de las Sedas, council invite.
+   Prefix: .soc- (society) and .pol- (politics). Uses theme tokens.
+   ═══════════════════════════════════════════════════════════════════════ */
+
+.soc-overlay {
+  position: absolute; inset: 0; display: flex; align-items: center; justify-content: center;
+  background: radial-gradient(ellipse at 50% 40%, rgba(40, 18, 60, 0.55), rgba(4, 2, 8, 0.82));
+  animation: lx-fade-in 0.2s ease; pointer-events: auto;
+}
+.soc-window {
+  width: min(1180px, 96vw); height: min(760px, 92vh); display: flex; flex-direction: column;
+  animation: soc-rise 0.32s cubic-bezier(.2, 1.3, .4, 1);
+  background:
+    radial-gradient(ellipse at 0% 0%, rgba(155, 92, 255, 0.10), transparent 45%),
+    radial-gradient(ellipse at 100% 100%, rgba(217, 179, 108, 0.08), transparent 50%),
+    var(--panel-bg);
+}
+@keyframes soc-rise { from { transform: translateY(24px) scale(0.97); opacity: 0; } to { transform: none; opacity: 1; } }
+.soc-title { margin-bottom: 10px; }
+.soc-title-icon { display: inline-flex; width: 28px; height: 28px; filter: drop-shadow(0 0 6px rgba(245, 217, 154, 0.5)); }
+.soc-title-icon svg { width: 100%; height: 100%; }
+.soc-title-txt { display: flex; flex-direction: column; line-height: 1.1; }
+.soc-subtitle { font-family: var(--f-book); font-style: italic; font-size: 14px; color: var(--ivory-dim); letter-spacing: 0.02em; }
+.soc-title-right { margin-left: auto; display: flex; gap: 8px; align-items: center; }
+.soc-title .lx-panel-close { margin-left: 8px; }
+.soc-chip { font-size: 15px; padding: 4px 12px 4px 6px; }
+.soc-chip-icon { display: inline-flex; width: 20px; height: 20px; }
+.soc-chip-icon svg { width: 100%; height: 100%; }
+.soc-chip-debt .soc-chip-val { color: #ffb0b8; }
+.soc-body { flex: 1; min-height: 0; }
+.soc-split { display: grid; grid-template-columns: 270px 1fr; gap: 18px; height: 100%; min-height: 0; }
+.soc-main { min-height: 0; overflow-y: auto; overflow-x: hidden; padding-right: 6px; display: flex; flex-direction: column; gap: 12px; }
+.soc-content { min-height: 0; }
+
+/* ── the NPC side ── */
+.soc-side { display: flex; flex-direction: column; align-items: center; gap: 8px; min-height: 0; }
+.soc-portrait {
+  width: 250px; height: 250px; border-radius: 14px; overflow: hidden; position: relative;
+  background: radial-gradient(circle at 50% 38%, rgba(217, 179, 108, 0.28), rgba(40, 20, 60, 0.4) 60%, rgba(0, 0, 0, 0.35));
+  border: 1px solid rgba(217, 179, 108, 0.4); box-shadow: inset 0 -30px 60px rgba(0, 0, 0, 0.45), 0 10px 30px rgba(0, 0, 0, 0.45);
+}
+.soc-portrait svg { width: 100%; height: 100%; }
+.soc-portrait.talk { animation: soc-talk 0.35s ease; }
+@keyframes soc-talk { 40% { transform: translateY(-5px) scale(1.02); } }
+.soc-npc-name { font-family: var(--f-title); font-size: 17px; color: var(--gold-hi); text-align: center; letter-spacing: 0.05em; display: flex; flex-direction: column; }
+.soc-npc-name span { font-family: var(--f-ui); font-size: 12px; color: var(--ivory-dim); letter-spacing: 0.02em; }
+.soc-bubble {
+  position: relative; width: 100%; padding: 10px 13px; border-radius: 12px; font-size: 15px; line-height: 1.35;
+  background: rgba(243, 234, 216, 0.95); color: #22140a; box-shadow: 0 6px 18px rgba(0, 0, 0, 0.4);
+  font-family: var(--f-ui);
+}
+.soc-bubble::before { content: ''; position: absolute; top: -8px; left: 50%; transform: translateX(-50%); border: 8px solid transparent; border-top: 0; border-bottom-color: rgba(243, 234, 216, 0.95); }
+.soc-bubble.big { font-size: 17px; }
+.soc-bubble.pop { animation: lx-pop-in 0.25s cubic-bezier(.2, 1.4, .4, 1); }
+.soc-mods { display: flex; flex-wrap: wrap; gap: 5px; justify-content: center; }
+.soc-mods-title { width: 100%; text-align: center; font-size: 13px; color: var(--ivory-dim); }
+.soc-tag { font-size: 11px; padding: 2px 8px; border-radius: 999px; background: rgba(155, 92, 255, 0.16); border: 1px solid rgba(199, 162, 255, 0.3); color: var(--violet-hi); }
+
+/* ── goods table ── */
+.soc-goods { display: flex; flex-direction: column; gap: 6px; }
+.soc-goods-head, .soc-good-row {
+  display: grid; grid-template-columns: minmax(170px, 1.6fr) 96px 112px 72px 142px 150px; align-items: center; gap: 9px;
+}
+.soc-goods-head { font-size: 11px; text-transform: uppercase; letter-spacing: 0.12em; color: var(--ivory-dim); padding: 0 10px; }
+.soc-good-row {
+  padding: 7px 10px; border-radius: 10px; background: linear-gradient(90deg, rgba(255, 255, 255, 0.045), rgba(255, 255, 255, 0.015));
+  border: 1px solid rgba(255, 255, 255, 0.07); transition: background 0.15s, border-color 0.15s, transform 0.15s;
+}
+.soc-good-row:hover { background: linear-gradient(90deg, rgba(155, 92, 255, 0.12), rgba(255, 255, 255, 0.02)); border-color: rgba(199, 162, 255, 0.3); }
+.soc-good-name { display: flex; align-items: center; gap: 10px; min-width: 0; }
+.soc-good-icon { display: inline-flex; width: 38px; height: 38px; flex: none; filter: drop-shadow(0 2px 3px rgba(0, 0, 0, 0.5)); transition: transform 0.2s; }
+.soc-good-row:hover .soc-good-icon { transform: rotate(-8deg) scale(1.12); }
+.soc-good-icon svg { width: 100%; height: 100%; }
+.soc-good-title { font-family: var(--f-title); font-size: 15px; color: var(--ivory); }
+.soc-good-hint { font-size: 11px; color: var(--ivory-dim); white-space: nowrap; overflow: hidden; text-overflow: ellipsis; }
+.soc-stock { display: flex; align-items: center; gap: 6px; }
+.soc-stock-bar { flex: 1; height: 6px; background: rgba(0, 0, 0, 0.5); border-radius: 4px; overflow: hidden; border: 1px solid rgba(255, 255, 255, 0.1); }
+.soc-stock-fill { height: 100%; background: linear-gradient(90deg, #7a5a2a, var(--gold)); }
+.soc-price { display: flex; align-items: center; gap: 7px; font-variant-numeric: tabular-nums; }
+.soc-price-buy { font-weight: 800; color: var(--gold-hi); font-size: 16px; }
+.soc-price-sell { font-size: 12px; color: var(--ivory-dim); }
+.soc-price-sell::before { content: '/ '; opacity: 0.6; }
+.soc-trend { font-size: 12px; width: 12px; color: var(--ivory-dim); }
+.soc-trend.up { color: #ff7a8a; animation: soc-bob 1.4s ease-in-out infinite; }
+.soc-trend.down { color: var(--good); animation: soc-bob 1.4s ease-in-out infinite reverse; }
+@keyframes soc-bob { 50% { transform: translateY(-2px); } }
+.soc-have { display: flex; flex-direction: column; font-variant-numeric: tabular-nums; }
+.soc-qty { display: flex; align-items: center; gap: 4px; }
+.soc-qty-val { min-width: 28px; text-align: center; font-weight: 800; font-variant-numeric: tabular-nums; }
+.soc-qty-btn {
+  min-width: 24px; height: 24px; border-radius: 6px; border: 1px solid rgba(255, 255, 255, 0.2); cursor: pointer;
+  background: rgba(255, 255, 255, 0.06); color: var(--ivory); font: 700 14px/1 var(--f-ui);
+}
+.soc-qty-btn.wide { padding: 0 6px; font-size: 11px; }
+.soc-qty-btn:hover { border-color: var(--violet-hi); background: rgba(155, 92, 255, 0.2); }
+.soc-trade-btns { display: flex; flex-direction: column; gap: 4px; align-items: stretch; }
+.soc-trade-btns .lx-btn { justify-content: space-between; padding: 5px 9px; }
+.soc-trade-btns .lx-btn b { color: var(--gold-hi); font-variant-numeric: tabular-nums; }
+.soc-haggle-btns { display: flex; gap: 4px; justify-content: center; }
+.soc-haggle-btns:empty { display: none; }
+.soc-haggle-btn {
+  font: 700 11px var(--f-ui); color: #1b1006; background: linear-gradient(180deg, var(--gold-hi), var(--gold)); border: none; border-radius: 6px;
+  padding: 4px 7px; cursor: pointer; box-shadow: 0 0 10px rgba(245, 217, 154, 0.45); animation: soc-glow 1.6s ease-in-out infinite;
+}
+@keyframes soc-glow { 50% { box-shadow: 0 0 18px rgba(245, 217, 154, 0.8); } }
+.soc-foot { padding: 8px 10px; }
+
+/* ── businesses ── */
+.soc-biz { display: flex; flex-direction: column; gap: 8px; }
+.soc-biz-card {
+  display: grid; grid-template-columns: 56px 1fr auto; gap: 12px; align-items: center; padding: 10px 12px; border-radius: 10px;
+  background: rgba(255, 255, 255, 0.04); border: 1px solid rgba(255, 255, 255, 0.08);
+}
+.soc-biz-card.owned { border-color: rgba(217, 179, 108, 0.55); background: linear-gradient(90deg, rgba(217, 179, 108, 0.14), rgba(255, 255, 255, 0.02)); }
+.soc-biz-icon { display: inline-flex; width: 50px; height: 50px; }
+.soc-biz-icon svg { width: 100%; height: 100%; }
+.soc-biz-name { font-family: var(--f-title); font-size: 16px; color: var(--gold-hi); display: flex; gap: 8px; align-items: center; }
+.soc-stars { color: var(--gold); letter-spacing: 2px; font-size: 13px; }
+.soc-biz-actions { display: flex; gap: 6px; }
+.soc-manip { margin-top: 6px; padding: 10px 12px; border-radius: 10px; border: 1px dashed rgba(199, 162, 255, 0.35); background: rgba(155, 92, 255, 0.06); }
+.soc-manip-title { font-family: var(--f-title); font-size: 14px; margin-bottom: 4px; }
+.soc-manip-row { display: flex; flex-wrap: wrap; gap: 8px; margin-top: 8px; }
+.soc-manip-good { display: flex; align-items: center; gap: 3px; padding: 3px 5px; border-radius: 8px; background: rgba(0, 0, 0, 0.25); }
+.soc-manip-good svg { width: 24px; height: 24px; }
+
+/* ── haggling ── */
+.soc-haggle-back { z-index: 2; }
+.soc-haggle { width: min(820px, 94vw); animation: lx-pop-in 0.25s cubic-bezier(.2, 1.4, .4, 1); }
+.soc-haggle .lx-panel-title svg { width: 26px; height: 26px; }
+.soc-haggle-grid { display: grid; grid-template-columns: 290px 1fr; gap: 18px; }
+.soc-haggle-portrait {
+  width: 290px; height: 290px; border-radius: 14px; overflow: hidden; border: 1px solid rgba(217, 179, 108, 0.45);
+  background: radial-gradient(circle at 50% 38%, rgba(255, 209, 102, 0.3), rgba(40, 20, 60, 0.4) 60%, rgba(0, 0, 0, 0.35));
+}
+.soc-haggle-portrait svg { width: 100%; height: 100%; }
+.soc-haggle-portrait.talk { animation: soc-talk 0.35s ease; }
+.soc-haggle-right { display: flex; flex-direction: column; gap: 10px; }
+.soc-pat { display: flex; align-items: center; gap: 10px; }
+.soc-pat-label { font-size: 12px; text-transform: uppercase; letter-spacing: 0.12em; color: var(--ivory-dim); }
+.soc-pat-bar { flex: 1; height: 12px; border-radius: 7px; background: rgba(0, 0, 0, 0.55); border: 1px solid rgba(255, 255, 255, 0.15); overflow: hidden; }
+.soc-pat-fill { height: 100%; transform-origin: left; background: var(--good); transition: transform 0.4s cubic-bezier(.2, 1.2, .4, 1), background 0.3s; }
+.soc-haggle-nums { display: flex; justify-content: space-between; align-items: baseline; font-size: 17px; }
+.soc-haggle-nums b { font-family: var(--f-impact); font-size: 26px; color: var(--gold-hi); letter-spacing: 0.04em; }
+.soc-offer { display: flex; flex-direction: column; gap: 6px; font-size: 16px; }
+.soc-offer-val { font-family: var(--f-impact); font-size: 30px; color: #fff; letter-spacing: 0.04em; }
+.soc-slider { height: 22px; }
+.soc-haggle-hist { max-height: 72px; overflow: auto; font-size: 12px; color: var(--ivory-dim); display: flex; flex-direction: column; gap: 2px; }
+
+/* ── bank & sedas cards ── */
+.soc-card { padding: 12px 14px; border-radius: 12px; background: rgba(255, 255, 255, 0.04); border: 1px solid rgba(255, 255, 255, 0.09); display: flex; flex-direction: column; gap: 9px; }
+.soc-card-title { font-family: var(--f-title); font-size: 16px; color: var(--gold-hi); display: flex; align-items: center; gap: 8px; letter-spacing: 0.05em; }
+.soc-card-title svg { width: 22px; height: 22px; }
+.soc-cost { margin-left: auto; font-family: var(--f-ui); font-size: 13px; color: var(--secret); }
+.soc-kv { display: grid; grid-template-columns: auto auto; gap: 3px 14px; font-size: 14px; }
+.soc-kv span { color: var(--ivory-dim); }
+.soc-kv b { font-variant-numeric: tabular-nums; }
+.soc-warn { font-size: 13px; padding: 6px 10px; border-radius: 8px; background: rgba(226, 69, 91, 0.12); border: 1px solid rgba(226, 69, 91, 0.4); color: #ffc0c8; }
+.soc-loans { display: flex; flex-direction: column; gap: 4px; }
+.soc-loan { display: grid; grid-template-columns: 1fr auto auto; gap: 12px; font-size: 14px; padding: 5px 9px; border-radius: 8px; background: rgba(0, 0, 0, 0.25); }
+.soc-loan.late { border: 1px solid rgba(226, 69, 91, 0.6); animation: soc-late 1.2s ease-in-out infinite; }
+@keyframes soc-late { 50% { background: rgba(226, 69, 91, 0.15); } }
+.soc-share-row { display: flex; align-items: center; gap: 18px; flex-wrap: wrap; }
+.soc-share-price b { font-family: var(--f-impact); font-size: 30px; color: var(--good); letter-spacing: 0.04em; }
+.soc-own { display: flex; flex-direction: column; gap: 4px; }
+.soc-own-bar { height: 10px; border-radius: 6px; background: rgba(0, 0, 0, 0.5); overflow: hidden; border: 1px solid rgba(217, 179, 108, 0.3); }
+.soc-own-fill { height: 100%; background: linear-gradient(90deg, var(--gold-lo), var(--gold-hi)); box-shadow: 0 0 10px var(--gold); }
+.soc-secret-count { display: flex; align-items: center; gap: 10px; }
+.soc-secret-count svg { width: 36px; height: 36px; }
+.soc-secret-count b { font-family: var(--f-impact); font-size: 34px; color: var(--secret); }
+.soc-cont-row { display: flex; flex-wrap: wrap; gap: 8px; }
+.soc-cont-btn, .soc-del-btn {
+  position: relative; display: inline-flex; align-items: center; gap: 6px; padding: 5px 10px 5px 6px; border-radius: 9px; cursor: pointer;
+  background: rgba(255, 255, 255, 0.05); border: 1px solid rgba(255, 255, 255, 0.14); color: var(--ivory); font: 600 13px var(--f-ui);
+  transition: transform 0.12s, border-color 0.12s, background 0.12s;
+}
+.soc-cont-btn:hover, .soc-del-btn:hover { transform: translateY(-2px); border-color: var(--violet-hi); background: rgba(155, 92, 255, 0.16); }
+.soc-cont-btn.known { border-color: rgba(217, 179, 108, 0.6); }
+.soc-cont-btn svg { width: 30px; height: 30px; }
+.soc-del-face { display: inline-flex; width: 38px; height: 38px; border-radius: 50%; overflow: hidden; background: rgba(0, 0, 0, 0.3); }
+.soc-del-face svg { width: 100%; height: 100%; }
+.soc-badge { position: absolute; top: -6px; right: -6px; min-width: 18px; height: 18px; border-radius: 9px; background: var(--secret); color: #0d2622; font: 800 11px/18px var(--f-ui); text-align: center; }
+.soc-reveal { padding: 14px 16px; border-radius: 12px; border: 1px solid var(--gold); background: linear-gradient(135deg, rgba(217, 179, 108, 0.16), rgba(155, 92, 255, 0.12)); box-shadow: 0 0 30px rgba(217, 179, 108, 0.25); }
+.soc-weak { display: flex; flex-direction: column; gap: 6px; }
+.soc-weak-head { display: flex; gap: 12px; align-items: center; margin-bottom: 4px; }
+.soc-weak-head svg { width: 42px; height: 42px; }
+.soc-weak-row { display: grid; grid-template-columns: 90px 1fr 56px; gap: 10px; align-items: center; font-size: 14px; }
+.soc-weak-bar { height: 10px; border-radius: 6px; background: rgba(0, 0, 0, 0.45); overflow: hidden; }
+.soc-weak-fill { height: 100%; animation: soc-grow 0.7s cubic-bezier(.2, 1.2, .4, 1) both; transform-origin: left; }
+@keyframes soc-grow { from { transform: scaleX(0); } }
+.soc-reveal-relic .lx-title, .soc-reveal-secret .lx-book { font-size: 20px; }
+.soc-reveal-secret .lx-book { font-style: italic; color: var(--ivory); }
+.soc-known { display: flex; flex-direction: column; gap: 2px; color: var(--ivory-dim); }
+.soc-rumor { font-family: var(--f-book); font-style: italic; color: var(--ivory-dim); }
+.soc-chip-inline { display: inline-block; font-size: 11px; padding: 1px 6px; margin: 1px 2px; border-radius: 6px; background: rgba(255, 255, 255, 0.08); border: 1px solid rgba(255, 255, 255, 0.12); color: var(--ivory); }
+
+/* ── floating numbers ── */
+.soc-pop {
+  position: absolute; transform: translate(-50%, -50%); font-family: var(--f-impact); font-size: 22px; letter-spacing: 0.04em; white-space: nowrap;
+  text-shadow: 2px 2px 0 #000, 0 0 12px rgba(0, 0, 0, 0.6); pointer-events: none; animation: soc-pop 1.25s cubic-bezier(.2, 1, .3, 1) forwards; z-index: 5;
+}
+.soc-pop.big { font-size: 34px; }
+@keyframes soc-pop { 0% { opacity: 0; transform: translate(-50%, -30%) scale(0.6); } 15% { opacity: 1; transform: translate(-50%, -80%) scale(1.15); } 70% { opacity: 1; transform: translate(-50%, -150%) scale(1); } 100% { opacity: 0; transform: translate(-50%, -190%) scale(0.95); } }
+
+/* ── Concilio invitation modal ── */
+.pol-invite-modal { width: min(760px, 94vw); }
+.pol-invite { display: flex; flex-direction: column; gap: 10px; }
+.pol-invite-lead { font-family: var(--f-book); font-style: italic; font-size: 17px; color: var(--ivory-dim); }
+.pol-invite-card { display: grid; grid-template-columns: 44px 1fr; gap: 12px; padding: 10px 12px; border-radius: 10px; background: rgba(243, 234, 216, 0.06); border: 1px solid rgba(217, 179, 108, 0.35); }
+.pol-invite-icon { font-size: 28px; text-align: center; color: var(--gold-hi); text-shadow: 0 0 12px rgba(245, 217, 154, 0.6); }
+.pol-invite-title { font-family: var(--f-title); font-size: 17px; color: var(--gold-hi); }
+.pol-invite-desc { font-size: 14px; color: var(--ivory-dim); margin: 2px 0 6px; }
+.pol-invite-foot { display: flex; gap: 8px; align-items: center; flex-wrap: wrap; }
+.pol-want { display: inline-block; font: 800 11px var(--f-ui); letter-spacing: 0.1em; text-transform: uppercase; padding: 3px 8px; border-radius: 6px; }
+.pol-want.si { background: rgba(111, 227, 154, 0.15); color: var(--good); border: 1px solid rgba(111, 227, 154, 0.5); }
+.pol-want.no { background: rgba(226, 69, 91, 0.15); color: #ff8a98; border: 1px solid rgba(226, 69, 91, 0.5); }
+
+@media (max-width: 900px) {
+  .soc-split { grid-template-columns: 1fr; }
+  .soc-side { flex-direction: row; flex-wrap: wrap; }
+  .soc-portrait { width: 120px; height: 120px; }
+  .soc-goods-head { display: none; }
+  .soc-good-row { grid-template-columns: 1fr 1fr; }
+  .soc-haggle-grid { grid-template-columns: 1fr; }
+  .soc-haggle-portrait { width: 160px; height: 160px; }
+}
+
+/* ── the fall of a continent (top of screen, above other modules' banners) ── */
+.soc-fall { position: absolute; left: 50%; top: 6vh; transform: translateX(-50%); display: flex; flex-direction: column; align-items: center; gap: 4px; pointer-events: none; text-align: center; }
+.soc-fall-crest { position: relative; width: 110px; height: 110px; animation: soc-fall-drop 0.7s cubic-bezier(.2, 1.4, .4, 1) both; filter: drop-shadow(0 0 22px rgba(155, 92, 255, 0.8)); }
+.soc-fall-crest svg { width: 100%; height: 100%; }
+.soc-fall-ink { position: absolute; inset: 8% 10% 4%; border-radius: 0 0 50% 50%; background: radial-gradient(circle at 50% 40%, rgba(60, 10, 110, 0.85), rgba(155, 92, 255, 0.5) 45%, transparent 70%); mix-blend-mode: multiply; transform: scale(0); animation: soc-ink 1.1s ease-out 0.55s forwards; }
+.soc-fall-title { font-family: var(--f-title); font-size: clamp(26px, 3.6vw, 52px); letter-spacing: 0.22em; color: var(--violet-hi); text-shadow: 0 0 30px rgba(155, 92, 255, 0.9), 0 3px 0 #000; animation: soc-fall-title 0.8s cubic-bezier(.2, 1.3, .4, 1) 0.35s both; }
+.soc-fall-sub { font-family: var(--f-book); font-style: italic; font-size: clamp(15px, 1.5vw, 21px); color: var(--ivory); text-shadow: 0 2px 8px #000; animation: lx-fade-in 0.8s ease 0.9s both; }
+.soc-fall.out { animation: lx-fade-out 0.6s ease forwards; }
+@keyframes soc-fall-drop { from { transform: translateY(-60px) scale(1.4); opacity: 0; } to { transform: none; opacity: 1; } }
+@keyframes soc-ink { to { transform: scale(1.1); } }
+@keyframes soc-fall-title { from { transform: scale(1.6); letter-spacing: 0.6em; opacity: 0; filter: blur(6px); } to { transform: none; opacity: 1; filter: none; } }
